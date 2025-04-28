@@ -18,27 +18,23 @@ function setup() {
 function draw() {
   background('#dde5b6');
   
-  // 水平鏡像翻轉攝影機畫面
-  push();
-  translate(width, 0);
-  scale(-1, 1);
+  // 顯示攝影機畫面（移除水平翻轉）
   let x = (width - capture.width) / 2;
   let y = (height - capture.height) / 2;
   image(capture, x, y, capture.width, capture.height);
-  pop();
 
   // 更新 overlayGraphics 為馬賽克效果
   overlayGraphics.clear();
   capture.loadPixels();
-  for (let x = 0; x < capture.width; x += 20) {
-    for (let y = 0; y < capture.height; y += 20) {
-      let i = (y * capture.width + x) * 4; // 計算像素索引
+  for (let gx = 0; gx < capture.width; gx += 20) {
+    for (let gy = 0; gy < capture.height; gy += 20) {
+      let i = (gy * capture.width + gx) * 4; // 計算像素索引
       let r = capture.pixels[i];
       let g = capture.pixels[i + 1];
       let b = capture.pixels[i + 2];
       overlayGraphics.fill(r, g, b);
       overlayGraphics.noStroke();
-      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形
+      overlayGraphics.ellipse(gx + 10, gy + 10, 15, 15); // 繪製圓形
     }
   }
 
