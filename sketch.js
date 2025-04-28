@@ -3,7 +3,7 @@ let overlayGraphics;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background('#000000'); // 設定整體背景為黑色
+  background('#dde5b6'); // 設定整體背景為淺色
   
   // 初始化攝影機
   capture = createCapture(VIDEO);
@@ -25,7 +25,7 @@ function draw() {
   image(capture, 0, (height - capture.height) / 2, capture.width, capture.height);
   pop();
 
-  // 更新 overlayGraphics 為基於攝影機畫面的馬賽克效果
+  // 更新 overlayGraphics 為基於攝影機畫面的灰階效果
   overlayGraphics.background(0); // 設定 overlayGraphics 背景為黑色
   capture.loadPixels();
   for (let gx = 0; gx < capture.width; gx += 20) {
@@ -34,7 +34,8 @@ function draw() {
       let r = capture.pixels[i];
       let g = capture.pixels[i + 1];
       let b = capture.pixels[i + 2];
-      overlayGraphics.fill(r, g, b);
+      let gray = (r + g + b) / 3; // 計算灰階顏色
+      overlayGraphics.fill(gray);
       overlayGraphics.noStroke();
       overlayGraphics.ellipse(gx + 10, gy + 10, 15, 15); // 繪製圓形
     }
