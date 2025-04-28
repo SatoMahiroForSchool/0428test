@@ -16,7 +16,7 @@ function setup() {
 }
 
 function draw() {
-  background('#000000'); // 設定整體背景為黑色
+  background('#dde5b6'); // 設定整體背景為黑色
   
   // 正常顯示攝影機畫面（修正左右顛倒）
   push();
