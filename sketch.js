@@ -16,7 +16,7 @@ function setup() {
 }
 
 function draw() {
-  background('#dde5b6'); // 設定整體背景為黑色
+  background('#dde5b6'); // 設定整體背景為淺色
   
   // 正常顯示攝影機畫面（修正左右顛倒）
   push();
@@ -25,19 +25,24 @@ function draw() {
   image(capture, 0, (height - capture.height) / 2, capture.width, capture.height);
   pop();
 
-  // 更新 overlayGraphics 為基於攝影機畫面的灰階效果
+  // 更新 overlayGraphics 為基於攝影機畫面的效果
   overlayGraphics.background(0); // 設定 overlayGraphics 背景為黑色
   capture.loadPixels();
   for (let gx = 0; gx < capture.width; gx += 20) {
     for (let gy = 0; gy < capture.height; gy += 20) {
       let i = (gy * capture.width + gx) * 4; // 計算像素索引
-      let r = capture.pixels[i];
-      let g = capture.pixels[i + 1];
-      let b = capture.pixels[i + 2];
-      let gray = (r + g + b) / 3; // 計算灰階顏色
-      overlayGraphics.fill(gray);
+      let r = 0; // R 固定為 0
+      let g = capture.pixels[i + 1]; // 保留 G 的值
+      let b = 100; // B 固定為 100
+
+      // 繪製方框
+      overlayGraphics.fill(r, g, b);
       overlayGraphics.noStroke();
-      overlayGraphics.ellipse(gx + 10, gy + 10, 15, 15); // 繪製圓形
+      overlayGraphics.rect(gx + 1, gy + 1, 18, 18); // 方框寬高為 18
+
+      // 繪製中間的黑色圓
+      overlayGraphics.fill(0); // 圓的顏色為黑色
+      overlayGraphics.ellipse(gx + 10, gy + 10, 5, 5); // 圓的大小為 5
     }
   }
 
