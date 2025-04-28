@@ -40,6 +40,21 @@ function draw() {
   image(capture, x, y, capture.width, capture.height);
   pop();
 
+  // 更新 overlayGraphics 為基於攝影機畫面的馬賽克效果
+  overlayGraphics.background(0); // 設定背景為黑色
+  capture.loadPixels();
+  for (let gx = 0; gx < capture.width; gx += 20) {
+    for (let gy = 0; gy < capture.height; gy += 20) {
+      let i = (gy * capture.width + gx) * 4; // 計算像素索引
+      let r = capture.pixels[i];
+      let g = capture.pixels[i + 1];
+      let b = capture.pixels[i + 2];
+      overlayGraphics.fill(r, g, b);
+      overlayGraphics.noStroke();
+      overlayGraphics.ellipse(gx + 10, gy + 10, 15, 15); // 繪製圓形
+    }
+  }
+
   // 顯示 overlayGraphics 在視訊畫面上方
   let overlayX = (width - overlayGraphics.width) / 2;
   let overlayY = (height - overlayGraphics.height) / 2;
