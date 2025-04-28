@@ -13,19 +13,6 @@ function setup() {
   // 建立與攝影機畫面相同大小的 Graphics
   overlayGraphics = createGraphics(capture.width, capture.height);
   overlayGraphics.background(0); // 設定背景為黑色
-
-  // 每隔 20px 繪製一個圓，覆蓋整個 graphics
-  for (let x = 0; x < overlayGraphics.width; x += 20) {
-    for (let y = 0; y < overlayGraphics.height; y += 20) {
-      // 計算相對顏色，根據位置生成
-      let r = map(x, 0, overlayGraphics.width, 0, 255);
-      let g = map(y, 0, overlayGraphics.height, 0, 255);
-      let b = map(x + y, 0, overlayGraphics.width + overlayGraphics.height, 0, 255);
-      overlayGraphics.fill(r, g, b);
-      overlayGraphics.noStroke();
-      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 圓心偏移，寬高為 15
-    }
-  }
 }
 
 function draw() {
@@ -39,6 +26,21 @@ function draw() {
   let y = (height - capture.height) / 2;
   image(capture, x, y, capture.width, capture.height);
   pop();
+
+  // 更新 overlayGraphics 為馬賽克效果
+  overlayGraphics.clear();
+  capture.loadPixels();
+  for (let x = 0; x < capture.width; x += 20) {
+    for (let y = 0; y < capture.height; y += 20) {
+      let i = (y * capture.width + x) * 4; // 計算像素索引
+      let r = capture.pixels[i];
+      let g = capture.pixels[i + 1];
+      let b = capture.pixels[i + 2];
+      overlayGraphics.fill(r, g, b);
+      overlayGraphics.noStroke();
+      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 繪製圓形
+    }
+  }
 
   // 顯示 overlayGraphics 在視訊畫面上方
   let overlayX = (width - overlayGraphics.width) / 2;
