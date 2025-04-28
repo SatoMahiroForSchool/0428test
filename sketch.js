@@ -12,7 +12,7 @@ function setup() {
 
   // 建立與攝影機畫面相同大小的 Graphics
   overlayGraphics = createGraphics(capture.width, capture.height);
-  overlayGraphics.background(255, 0, 0, 100); // 半透明紅色背景
+  //overlayGraphics.background(255, 0, 0, 100); // 半透明紅色背景，失去這串則為透明
   overlayGraphics.fill(255);
   overlayGraphics.textSize(32);
   overlayGraphics.textAlign(CENTER, CENTER);
