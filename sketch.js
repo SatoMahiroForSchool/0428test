@@ -33,14 +33,13 @@ function draw() {
   
   // 水平鏡像翻轉攝影機畫面
   push();
-  translate(width, 0);
-  let x = (width - capture.width) / 2;
-  let y = (height - capture.height) / 2;
-  image(capture, x, y, capture.width, capture.height);
+  translate((width - capture.width) / 2, 0); // 將畫布原點移到攝影機畫面左上角
+  scale(1, 1); // 移除水平翻轉
+  image(capture, 0, (height - capture.height) / 2, capture.width, capture.height);
   pop();
 
   // 更新 overlayGraphics 為基於攝影機畫面的馬賽克效果
-  overlayGraphics.background(0); // 設定背景為黑色
+  overlayGraphics.clear(); // 設定背景為透明
   capture.loadPixels();
   for (let gx = 0; gx < capture.width; gx += 20) {
     for (let gy = 0; gy < capture.height; gy += 20) {
