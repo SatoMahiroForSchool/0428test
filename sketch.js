@@ -34,7 +34,6 @@ function draw() {
   // 水平鏡像翻轉攝影機畫面
   push();
   translate(width, 0);
-  scale(-1, 1);
   let x = (width - capture.width) / 2;
   let y = (height - capture.height) / 2;
   image(capture, x, y, capture.width, capture.height);
