@@ -3,7 +3,7 @@ let overlayGraphics;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background('#dde5b6');
+  background('#000000'); // 設定背景為黑色
   
   // 初始化攝影機
   capture = createCapture(VIDEO);
@@ -12,29 +12,16 @@ function setup() {
 
   // 建立與攝影機畫面相同大小的 Graphics
   overlayGraphics = createGraphics(capture.width, capture.height);
-  overlayGraphics.background(0); // 設定背景為黑色
-
-  // 每隔 20px 繪製一個圓，覆蓋整個 graphics
-  for (let x = 0; x < overlayGraphics.width; x += 20) {
-    for (let y = 0; y < overlayGraphics.height; y += 20) {
-      // 計算相對顏色，根據位置生成
-      let r = map(x, 0, overlayGraphics.width, 0, 255);
-      let g = map(y, 0, overlayGraphics.height, 0, 255);
-      let b = map(x + y, 0, overlayGraphics.width + overlayGraphics.height, 0, 255);
-      overlayGraphics.fill(r, g, b);
-      overlayGraphics.noStroke();
-      overlayGraphics.ellipse(x + 10, y + 10, 15, 15); // 圓心偏移，寬高為 15
-    }
-  }
+  overlayGraphics.clear(); // 設定背景為透明
 }
 
 function draw() {
-  background('#dde5b6');
+  background('#000000'); // 設定背景為黑色
   
   // 水平鏡像翻轉攝影機畫面
   push();
-  translate((width - capture.width) / 2, 0); // 將畫布原點移到攝影機畫面左上角
-  scale(1, 1); // 移除水平翻轉
+  translate((width + capture.width) / 2, 0); // 將畫布原點移到攝影機畫面右上角
+  scale(-1, 1); // 水平翻轉畫布
   image(capture, 0, (height - capture.height) / 2, capture.width, capture.height);
   pop();
 
